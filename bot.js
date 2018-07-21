@@ -7,11 +7,10 @@ const YouTube = require('simple-youtube-api');
 const youtube = new YouTube("AIzaSyAdORXg7UZUo7sePv97JyoDqtQVi3Ll0b8");
 const queue = new Map();
 const client = new Discord.Client();
-const fs = require("fs"); //npm i fs
-const Canvas = require("canvas");//for linux = npm i canvas | for windows = npm i canvas-prebuilt
-const jimp = require("jimp");// npm i jimp
+const fs = require('fs');
+const moment = require('moment');
 
-/////////////////////////
+/////////////////////////////////////////
 
 
 let profile = JSON.parse(fs.readFileSync("./profile.json", "utf8"))
