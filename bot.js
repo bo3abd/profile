@@ -12,7 +12,7 @@ const Canvas = require("canvas");//for linux = npm i canvas | for windows = npm 
 const jimp = require("jimp");// npm i jimp
 
 /////////////////////////
-const id = JSON.parse(fs.readFileSync("./id/mozo.json", "utf8"));
+const id = JSON.parse(fs.readFileSync("./mozo.json", "utf8"));
 client.on("message", message => {
   if (message.author.bot) return;
 fs.writeFile('./id/mozo.json', JSON.stringify(id), (err) => {
