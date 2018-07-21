@@ -12,166 +12,113 @@ const Canvas = require("canvas");//for linux = npm i canvas | for windows = npm 
 const jimp = require("jimp");// npm i jimp
 
 /////////////////////////
-const id = JSON.parse(fs.readFileSync("./id/mozo.json", "utf8"));
+
+
+let profile = JSON.parse(fs.readFileSync("./profile.json", "utf8"))
 client.on("message", message => {
   if (message.author.bot) return;
-fs.writeFile('./id/mozo.json', JSON.stringify(id), (err) => {
+ if(!message.channel.guild)return;
+  if (!profile[message.author.id]) profile[message.author.id] = {
+    tite: 'HypeLC User',
+    rep: 0,
+   reps: 'NOT YET',
+   lastDaily:'Not Collected',
+    level: 0,
+    points: 0,
+    credits: 1,
+  };
+fs.writeFile('./profile.json', JSON.stringify(profile), (err) => {
 if (err) console.error(err);
+})
 });
-});
-      client.on('message', message => {
-          if(!id[message.author.id]) id[message.author.id] ={
-              textrank: 1,
-              points: 1
-          };
-          if(message.author.bot) return;
-          id[message.author.id].points = Math.floor(id[message.author.id].points+4);
-          if(id[message.author.id].points > 10) {
-              id[message.author.id].points = 10;
-              id[message.author.id].level = Math.floor(id[message.author.id].level+4);
-          }
-          fs.writeFile('./id/mozo.json', JSON.stringify(id), (err) => {
-if (err) console.error(err);
-});
-   
-    client.on("message", message => {
+client.on("message", (message) => {
+  let men = message.mentions.users.first()
   if (message.author.bot) return;
+    if (message.author.id === client.user.id) return;
     if(!message.channel.guild) return;
-if (message.content.startsWith("#id")) {
-                               let user = message.mentions.users.first();
-         var human = message.mentions.users.first();
-            var author;
-            if(human) {
-                author = human;
-            } else {
-                author = message.author;
-            }
-          var mentionned = message.mentions.members.first();
-             var ah;
-            if(mentionned) {
-                ah = mentionned;
-            } else {
-                ah = message.member;
-            }
-            var ment = message.mentions.users.first();
-            var getvalueof;
-            if(ment) {
-              getvalueof = ment;
-            } else {
-              getvalueof = message.author;
-            }
-   var mentionned = message.mentions.users.first();
- 
-    var client;
-      if(mentionned){
-          var client = mentionned;
-      } else {
-          var client = message.author;
- 
-      }
-if (!id[getvalueof.id]) id[getvalueof.id] = {textrank: 0,points: 1};
-            let Image = Canvas.Image,
-            canvas = new Canvas(400, 200),
-            ctx = canvas.getContext('2d');
-            fs.readFile("./rank.png", function (err, Background) {
-            if (err) return console.log(err);
-            let id = Canvas.Image;
-            let ground = new Image;
-            ground.src = Background;
-            ctx.drawImage(ground, 0, 0, 400, 200);
- 
-});
- 
- 
- 
-                let url = getvalueof.displayAvatarURL.endsWith(".webp") ? getvalueof.displayAvatarURL.slice(5, -20) + ".png" : getvalueof.displayAvatarURL;
-                jimp.read(url, (err, ava) => {
-                    if (err) return console.log(err);
-                    ava.getBuffer(jimp.MIME_PNG, (err, buf) => {
-                        if (err) return console.log(err);
- 
-                        // N A M E  |  S H A D O W
-                        ctx.font = 'bold 18px Arial';
-                        ctx.fontSize = '18px';
-                        ctx.fillStyle = "#000000";
-                        ctx.textAlign = "center";
-                        ctx.fillText(`${getvalueof.username}`, 253, 79);
- 
-                        // N A M E
-                        ctx.font = 'bold 18px Arial';
-                        ctx.fontSize = '18px';
-                        ctx.fillStyle = "#f1f1f1";
-                        ctx.textAlign = "center";
-                        ctx.fillText(`${getvalueof.username}`, 253, 77);
- 
- 
-                        // T E X T  R A N K
-                        ctx.font = "bold 12px Arial";
-                        ctx.fontSize = '12px';
-                        ctx.fillStyle = "#f1f1f1";
-                        ctx.textAlign = "center";
-                        ctx.fillText(`${id[getvalueof.id].textrank}`, 252, 124);
- 
-                        // P O I N T S
-                        ctx.font = "bold 12px Arial";
-                        ctx.fontSize = '12px';
-                        ctx.fillStyle = "#f1f1f1";
-                        ctx.textAlign = "center";
-                        ctx.fillText(`${id[getvalueof.id].points}`, 253, 171);
- 
- 
-                        let Avatar = Canvas.Image;
-                        let ava = new Avatar;
- 
-ava.src = buf;
-                        ctx.beginPath();
-                        ctx.arc(75, 100, 780, 0, Math.PI*2, true);
-                        ctx.closePath();
-                        ctx.clip();
-                        ctx.drawImage(ava, 26, 69, 93, 93);
-                       
-message.channel.sendFile(canvas.toBuffer());
-
- });
-});
+if (message.content.startsWith('$نقاطي')) {
+  if(men) {
+  if (!profile[men.id]) profile[men.id] = {
+   lastDaily:'Not Collected',
+   credits: 1,
+ };
+  }
+  if(men) {
+message.channel.send(`** ${men.username}, راتبك:credit_card: ` + "هو  `" + `${profile[men.id].credits}` + "`.**")
+} else {
+ message.channel.send(`** ${message.author.username}, راتبك:credit_card:` + "هو  `" + `${profile[message.author.id].credits}` + "`.**")
 }
-});
-});
-
-//////////////////////////////////////////////////////////////////////
-client.on('ready', () => {
-    console.log(`Logged in as ${client.user.tag}!`);
-    console.log(`in ${client.guilds.size} servers `)
-console.log(`[M] ${client.users.size}`)
-    client.user.setStatus("dnd")
-});
+}
+if(message.content.startsWith("$راتب")) {
 
 
-const adminprefix = "!";
-const devs = ['346675179948212225','415649344864387072'];
-client.on('message', message => {
-  var argresult = message.content.split(` `).slice(1).join(' ');
-    if (!devs.includes(message.author.id)) return;
-    
-if (message.content.startsWith(adminprefix + 'setgame')) {
-  client.user.setGame(argresult);
-    message.channel.sendMessage(`**${argresult} تم تغيير بلاينق البوت إلى **`)
-} else 
-  if (message.content.startsWith(adminprefix + 'setname')) {
-client.user.setUsername(argresult).then
-    message.channel.sendMessage(`**${argresult}** : تم تغيير أسم البوت إلى`)
-return message.reply("**لا يمكنك تغيير الاسم يجب عليك الانتظآر لمدة ساعتين . **");
-} else
-  if (message.content.startsWith(adminprefix + 'setavatar')) {
-client.user.setAvatar(argresult);
-  message.channel.sendMessage(`**${argresult}** : تم تغير صورة البوت`);
-      } else     
-if (message.content.startsWith(adminprefix + 'setT')) {
-  client.user.setGame(argresult, "https://www.twitch.tv/idk");
-    message.channel.sendMessage(`**تم تغيير تويتش البوت إلى  ${argresult}**`)
+  if(profile[message.author.id].lastDaily != moment().format('day')) {
+   profile[message.author.id].lastDaily = moment().format('day')
+   profile[message.author.id].credits += 310
+    message.channel.send(`**${message.author.username}  \`310\` :dollar: حاصلك اليومي**`)
+} else {
+    message.channel.send(`**:stopwatch: | ${message.author.username}, خلاص اخذت فلوسك وش تبي بعد  :yen: بفكر اعطيك بعد${moment().endOf('day').fromNow()}**`)
+}
+}
+let cont = message.content.slice(prefix.length).split(" ");
+let args = cont.slice(2);
+let sender = message.author
+if(message.content.startsWith('$تحويل')) {
+          if (!args[0]) {
+            message.channel.send(`**طريقت الاستخدام : تحويل @سعيد الحظ المبلغ**`);
+         return;
+           }
+        // We should also make sure that args[0] is a number
+        if (isNaN(args[0])) {
+            message.channel.send(`**طريقت الاستخدام : تحويل @سعيد الحظ المبلغ**`);
+            return; // Remember to return if you are sending an error message! So the rest of the code doesn't run.
+             }
+             if(profile[message.author.id].credits < args[0]) return message.channel.send("**فلوسك ما تكفي**")
+if(args[0].startsWith("-")) return  message.channel.send('**!! لا اقدر**');
+				 let defineduser = '';
+            let firstMentioned = message.mentions.users.first();
+            defineduser = (firstMentioned)
+            if (!defineduser) return message.channel.send(`**طريقت الاستخدام : تحويل @سعيد الحظ المبلغ**`);
+            if(defineduser.id === message.author.id) return message.channel.send("***Transfering to your self hah ?!***")
+            var mentionned = message.mentions.users.first();
+if (!profile[sender.id]) profile[sender.id] = {}
+if (!profile[sender.id].credits) profile[sender.id].credits = 310;
+fs.writeFile('./profile.json', JSON.stringify(profile), (err) => {
+if (err) console.error(err);
+})
+var x = ['5587' ,' 9978' , '3785' , '7734' , '9864' , '7681' , '3758' , '7834' , '3489' , '1382' , '7389' , '8762' , '0889' , '0388' , '3316' , '0976' , '8603' , '1842' , '4565' , '9524' , '9524' , '0964' , '5930' , '5678' , '9567' , '6099' , '7058' , '0001' , '1324' , '9834' , '7668' , '0378' , '7055' , '9733' , '9876' , '9846' , '9685' , '8574' , '8975' , '9845' , '9862' , '0069' , '0807' , '0673' , '0813' , '1235' , '6879'];
+var x2 = ['5587' ,' 9978' , '3785' , '7734' , '9864' , '7681' , '3758' , '7834' , '3489' , '1382' , '7389' , '8762' , '0889' , '0388' , '3316' , '0976' , '8603' , '1842' , '4565' , '9524' , '9524' , '0964' , '5930' , '5678' , '9567' , '6099' , '7058' , '0001' , '1324' , '9834' , '7668' , '0378' , '7055' , '9733' , '9876' , '9846' , '9685' , '8574' , '8975' , '9845' , '9862' , '0069' , '0807' , '0673' , '0813' , '1235' , '6879'];
+        var x3 = Math.floor(Math.random()*x.length)
+        message.channel.send(` \`${args}\`** : الملبغ**  \n \`${x[x3]}\` ** : اكتب الرقم التالي حتي تتم عملية التحويل **`).then(msg1=> { 
+        var r = message.channel.awaitMessages(msg => msg.content == x2[x3], { maxMatches : 1, time : 60000, errors : ['time'] })
+        r.catch(() => {
+            message.delete()
+            r.delete()
+            msg.delete()
+            message.channel.sendEmbed(embed)
+        })
+        r.then(s=> {
+      var mando = message.mentions.users.id;
+      if  (!profile[defineduser.id]) profile[defineduser.id] = {}
+      if (!profile[defineduser.id].credits) profile[defineduser.id].credits = 200;
+      profile[defineduser.id].credits += (+args[0]);
+      profile[sender.id].credits += (-args[0]);
+      let mariam = message.author.username
+message.channel.send(`**:moneybag: | ${message.author.username}, تم تحويل ` + "`" + args[0] + "$` to " + `<@${defineduser.id}>**`)
+mentionned.send(` :credit_card: | الاصال \`\`\`You have received ${args[0]} from user ${message.author.username} ; (ID (${message.author.id})\`\`\``);
+               message.channel.sendEmbed(embed)
+        })
+        })
+        
+		
+
+
+
+
 }
 
-});
+      });
+
 
    
 // THIS  MUST  BE  THIS  WAY
