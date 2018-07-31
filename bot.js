@@ -15,28 +15,14 @@ const client = new Discord.Client();
 client.on('ready', function() {
     console.log(`i am ready ${client.user.username}`);
 });
-/*
-////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
-////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
-////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
-////////////////////////\\\\\\\\\\\\\\\\\\\\\\\\\
-*/
-var servers = [];
-var queue = [];
-var guilds = [];
-var queueNames = [];
-var isPlaying = false;
-var dispatcher = null;
-var voiceChannel = null;
-var skipReq = 0;
-var skippers = [];
-var now_playing = [];
-/*
-\\\\\\\\\\\\\\\\\\\\\\\\V/////////////////////////
-\\\\\\\\\\\\\\\\\\\\\\\\V/////////////////////////
-\\\\\\\\\\\\\\\\\\\\\\\\V/////////////////////////
-\\\\\\\\\\\\\\\\\\\\\\\\V/////////////////////////
-*/
+
+
+
+
+
+
+
+
 client.on('ready', () => {});
 var download = function(uri, filename, callback) {
     request.head(uri, function(err, res, body) {
