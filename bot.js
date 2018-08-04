@@ -24,7 +24,7 @@ client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     console.log(`in ${client.guilds.size} servers `)
 console.log(`[M] ${client.users.size}`)
-    client.user.setStatus("idle")
+    client.user.setStatus("dnd")
 });
 
 
